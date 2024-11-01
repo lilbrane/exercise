@@ -30,7 +30,12 @@ const Sidebar = ({ setSelected }) => {
 
             <p className='text-syyclopsOrange font-semibold  text-3xl'>Users</p>
             <div>
-                {
+                { users.length == 0 ? 
+                    <div className='flex justify-center text-lg mt-4'>
+                        <p>No users found</p>
+                    </div>
+
+                    :
                     users.map((user) => (
                         <div key={user.id} className='userDiv border-syyclopsOrange rounded-xl border p-4 text-2xl my-4 hover:bg-syyclopsLightBlue transition duration-300 whitespace-nowrap overflow-hidden' onClick={()=> {setSelected(user)}}>
                         <div className='mainInfo flex w-full font-semibold'>

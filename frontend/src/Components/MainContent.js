@@ -55,16 +55,7 @@ const MainContent = ({user}) => {
                         <div className='text-5xl font-bold flex'>
                             
                             <p>User {currentUser.id} info</p>
-                            {/* <div className='ml-auto mr-0 '
-                                onClick={() => setEditing(!editing)}
-                                onMouseEnter={() => setEditHover(true)} onMouseLeave={() => setEditHover(false)}>
-                                    {editHover ? 
-                                        <FaEdit className='hoverEditIcon  text-syyclopsLightBlue' size={60}/>
-                                        :
-                                        <FaRegEdit className='editIcon' size={60}/> 
-                                    }
-                            </div> */}
-
+                          
                             <div className='ml-auto mr-10 relative'
                                 onClick={() => setEditing(!editing)}
                                 onMouseEnter={() => setEditHover(true)} 
@@ -112,7 +103,7 @@ const MainContent = ({user}) => {
                             <p className='col-span-1 p-2'>Gender:</p>
                             {editing ? (
                                 <div className='col-span-2 flex justify-between mx-10 overflow-hidden'>
-                                    <div>
+                                    <div className='space-x-2'>
                                         <input type="radio" id="male" name="gender" value="male" 
                                             checked={currentUser.gender === "male"} 
                                             onChange={(e) => setCurrentUser({ ...currentUser, gender: e.target.value })}
@@ -120,7 +111,7 @@ const MainContent = ({user}) => {
                                         <label htmlFor="male">male</label>
                                     </div>
 
-                                    <div>
+                                    <div className='space-x-2'>
                                         <input type="radio" id="female" name="gender" value="female" 
                                             checked={currentUser.gender === "female"}
                                             onChange={(e) => setCurrentUser({ ...currentUser, gender: e.target.value})}
@@ -128,7 +119,7 @@ const MainContent = ({user}) => {
                                         <label htmlFor="female">female</label>
                                     </div>
 
-                                    <div>
+                                    <div className='space-x-2'>
                                         <input type="radio" id="other" name="gender" value="other" 
                                             checked={currentUser.gender === "other"} 
                                             onChange={(e) => setCurrentUser({ ...currentUser, gender: e.target.value})}
@@ -144,7 +135,7 @@ const MainContent = ({user}) => {
                             <p className='col-span-1 p-2'>Email:</p>
                             {editing ? (
                                 <div className='col-span-2'>
-                                    <input className='border rounded border-syyclopsLightBlue border-opacity-30 p-2 ' value={currentUser.email} 
+                                    <input className='border rounded border-syyclopsLightBlue border-opacity-30 p-2 w-full' value={currentUser.email} 
                                     onChange={(e) => setCurrentUser({ ...currentUser, email: e.target.value })} 
                                     onBlur={() => checkEmail()}
                                     />
