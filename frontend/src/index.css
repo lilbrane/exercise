@@ -47,3 +47,14 @@ html, body, #root {
   opacity: 1;
   transform: scale(1);
 }
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 10;
+  background-color: #090f2d; /* Dropdown background */
+  border: 1px solid #FFA500; /* Border matching syyclopsOrange */
+  max-height: 200px; /* Set max height if you have a long list */
+  overflow-y: auto; /* Add scroll if the list is too long */
+  padding: 8px;
+
+}

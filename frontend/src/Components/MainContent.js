@@ -21,13 +21,16 @@ const MainContent = ({user}) => {
         if(emailErr != "") return
 
         try {
-            const response = await axios.put(`https://dummyjson.com/users/${currentUser.id}`, {...currentUser})
+            // const response = await axios.put(`https://dummyjson.com/users/${currentUser.id}`, {...currentUser})
+            const response = await axios.put(`http://127.0.0.1:8000/users/${currentUser.id}`, {...currentUser})
             
             setCurrentUser(response.data)
             setEditing(false);
 
         } catch (err) {
             console.error(`ERROR in updating user - ${err.message}`)
+            alert("Failed to update user. Please try again.");
+
         }
     }
 
