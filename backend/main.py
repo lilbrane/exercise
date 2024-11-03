@@ -32,8 +32,18 @@ def read_root():
 
 # get limit from query
 @app.get("/users")
-def get_users(limit: Optional[int] = 20):
-    return {"users": users.get_users(limit)}
+def get_users(limit: Optional[int] = 20, sortBy: Optional[str] = 'id'):
+    usersArr = users.get_users(limit)
+
+    if sortBy == "fName":
+        usersArr = sorted(usersArr, key=lambda user: user["firstName"])
+    elif sortBy == "lName":
+        usersArr = sorted(usersArr, key=lambda user: user["lastName"])
+    else:
+        usersArr = sorted(usersArr, key=lambda user: user["id"])
+
+
+    return {"users": usersArr}
 
 @app.put("/users/{user_id}")
 def update_user(user_id: str, updated_user: User):

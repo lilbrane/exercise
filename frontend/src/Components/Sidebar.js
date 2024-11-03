@@ -5,18 +5,19 @@ import Dropdown from 'react-dropdown';
 
 const Sidebar = ({ setSelected }) => {
     const [users, setUsers] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState("id")
 
-    const options = [
-        'name', 'last name', "id"
+    const sortOptions = [
+        { value: 'id', label: 'Id' },
+        { value: 'fName', label: 'Name' },
+        { value: 'lName', label: 'Last name' },
     ];
-      const defaultOption = options[0];
 
     useEffect(() => {
-        
         const fetchUsers = async() => {
             try {
-                // const response = await axios.get("https://dummyjson.com/users?limit=20")
-                const response = await axios.get("http://127.0.0.1:8000/users?limit=20")
+                // process.env.REACT_APP_WEB_API_URL
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users?limit=20`)
 
                 setUsers(response.data.users)
             } catch (err) {
@@ -27,7 +28,19 @@ const Sidebar = ({ setSelected }) => {
         fetchUsers();
     }, [])
 
+    const changeOrder = async(selectedOption) => {
+        try {
+            console.log(selectedOption)
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users?limit=20&sortBy=${selectedOption.value}`)
+            setSelectedOrder(selectedOption.label)
+            setUsers(response.data.users)
+        } catch (err) {
+            console.error(`ERROR in fetching users - ${err.message}`)
+        }
+    }
+
   return (
+    
     <div className='sidebar w-1/4 h-screen  border-r bg-syyclopsBlue text-white overflow-y-auto '>
         <div className='flex justify-center sticky top-0 bg-syyclopsBlue p-4 mt-0 '>
             <img src={logo} alt="logo" className=' my-auto w-1/2' />
@@ -38,7 +51,7 @@ const Sidebar = ({ setSelected }) => {
                 <p className='text-syyclopsOrange font-semibold text-3xl'>Users</p>
                 <div className='flex space-x-2 my-auto'>
                     <p className=''>Sort by: </p>
-                    <Dropdown className='border border-syyclopsOrange px-2 rounded-lg' options={options} onChange={console.log("select")} value={defaultOption} placeholder="Select an option" menuClassName="dropdown-menu"/>
+                    <Dropdown className='border border-syyclopsOrange px-2 rounded-lg' options={sortOptions} onChange={changeOrder} value={selectedOrder} menuClassName="dropdown-menu"/>
 
                 </div>
             </div>
