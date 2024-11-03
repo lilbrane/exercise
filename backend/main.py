@@ -8,7 +8,7 @@ import users
 
 app = FastAPI()
 
-
+# cors for allowing access from frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -26,14 +26,14 @@ class User(BaseModel):
     email: str
     phone: str
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+# @app.get("/")
+# def read_root():
+#     return {"Hello": "World"}
 
-# get limit from query
+# get limit and sortBy from query
 @app.get("/users")
 def get_users(limit: Optional[int] = 20, sortBy: Optional[str] = 'id'):
-    usersArr = users.get_users(limit)
+    usersArr = users.get_users()
 
     if sortBy == "fName":
         usersArr = sorted(usersArr, key=lambda user: user["firstName"])
@@ -42,9 +42,9 @@ def get_users(limit: Optional[int] = 20, sortBy: Optional[str] = 'id'):
     else:
         usersArr = sorted(usersArr, key=lambda user: user["id"])
 
+    return {"users": usersArr[:limit]}
 
-    return {"users": usersArr}
-
+# update user, could update field by field instead of changing all
 @app.put("/users/{user_id}")
 def update_user(user_id: str, updated_user: User):
 

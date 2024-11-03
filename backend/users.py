@@ -1,4 +1,5 @@
-def get_users(limit=20):
+# extanded users
+def get_users():
     return [
         {
             "id": 1,
@@ -225,5 +226,5 @@ def get_users(limit=20):
             "email": "jackson.evans@x.dummyjson.com",
             "phone": "+44 468-628-6686"
         }
-    ][:limit]
+    ]
     
