@@ -92,7 +92,7 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
                                     { value: 'lName', label: 'Last Name' }
                                 ]}
                                 onChange={changeOrder}
-                                label="Sort by"
+                                label="Id"
                             />
                         </div>
 
