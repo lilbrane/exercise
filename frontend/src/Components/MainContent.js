@@ -24,11 +24,12 @@ const MainContent = ({user, updateUser }) => {
     // saving editing changes
     const saveChanges = async() => {
         // if email not correct exit function
-        if(emailErr != "" || phoneErr != "" || nameErr != "" || ageErr != "") return
+        if(emailErr !== "" || phoneErr !== "" || nameErr !== "" || ageErr !== "") return
 
         try {
             // const response = await axios.put(`https://dummyjson.com/users/${currentUser.id}`, {...currentUser})
-            const response = await axios.put(`${process.env.REACT_APP_API_URL}/users/${currentUser.id}`, {...currentUser})
+            // process.env.REACT_APP_API_URL
+            const response = await axios.put(`http://127.0.0.1:8000/users/${currentUser.id}`, {...currentUser})
             
             setCurrentUser(response.data)
             setEditing(false);
@@ -45,9 +46,9 @@ const MainContent = ({user, updateUser }) => {
     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     const checkEmail = () => { setEmailErr( !isValidEmail(currentUser.email) ? "Please enter a valid email address." : "")};
-    const checkAge = () => { setAgeErr( currentUser.age == "" ? "Please provide your age." : "")};
-    const checkName = () => { setNameErr( currentUser.firstName == "" || currentUser.lastName == ""  ? "Please enter your first and last name." : "")};
-    const checkPhone = () => { setPhoneErr( currentUser.phone == "" ? "Please provide your phone number." : "")};
+    const checkAge = () => { setAgeErr( currentUser.age === "" ? "Please provide your age." : "")};
+    const checkName = () => { setNameErr( currentUser.firstName === "" || currentUser.lastName === ""  ? "Please enter your first and last name." : "")};
+    const checkPhone = () => { setPhoneErr( currentUser.phone === "" ? "Please provide your phone number." : "")};
 
   return (
     

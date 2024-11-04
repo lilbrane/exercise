@@ -1,3 +1,28 @@
+# Starting the app 
+
+## Windows
+- Double click start-app.bat file
+
+## Other OS
+Go to `backend` folder and run:
+- if virutal enviroment doesn't exist, create one: `python -m venv venv`
+- Activate virtual enviroment: `.\venv\Scripts\activate`
+- Install packages: `pip install "fastapi[standard]" pytest`
+- Run server: `fastapi dev main.py`
+
+Go to `frontend` folder and run: 
+- install dependencies: `npm i`
+- start frontend server: `npm run start`
+
+# Testing
+Go to `backend` folder and run:
+- if virutal enviroment doesn't exist, create one: `python -m venv venv`
+- Activate virtual enviroment: `.\venv\Scripts\activate`
+- Install packages: `pip install "fastapi[standard]" pytest`
+- run tests: `pytest server_test.py` 
+
+# Instructions
+
 Welcome to test assignment for Syyclops.
 
 This test is split into 2 sections, React and Python.

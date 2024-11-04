@@ -8,6 +8,10 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
     const [users, setUsers] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState('id');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    
+    // chould be in env
+    // const api_url = process.env.REACT_APP_API_URL
+    const api_url = "http://127.0.0.1:8000"
 
     // user dropdown options
     const sortOptions = [
@@ -20,7 +24,7 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users?limit=20`);
+                const response = await axios.get(`${api_url}/users?limit=20`);
                 setUsers(response.data.users);
             } catch (err) {
                 console.error(`ERROR in fetching users - ${err.message}`);
@@ -33,7 +37,7 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
     // when changing the sortBy options in the dropdown, makes a call to backend with sortBy value in query
     const changeOrder = async (selectedOption) => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users?limit=20&sortBy=${selectedOption.value}`);
+            const response = await axios.get(`${api_url}/users?limit=20&sortBy=${selectedOption.value}`);
             setSelectedOrder(selectedOption.label);
             setUsers(response.data.users);
         } catch (err) {
