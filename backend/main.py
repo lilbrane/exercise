@@ -44,13 +44,19 @@ def get_users(limit: Optional[int] = 20, sortBy: Optional[str] = 'id'):
 
     return {"users": usersArr[:limit]}
 
-# update user, could update field by field instead of changing all
+# update users values, but not id
 @app.put("/users/{user_id}")
 def update_user(user_id: str, updated_user: User):
 
     for user in users.get_users():
         if int(user_id) == user["id"]:
-            user = updated_user
+            # user = updated_user
+
+            # Update fields one by one, leave out id field
+            for field, value in updated_user.dict().items():
+                if field != "id": 
+                    user[field] = value
+
             return user
 
     raise HTTPException(status_code=404, detail="User not found")

@@ -69,8 +69,8 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
             {/* sidebar */}
             <div className={`z-10 sidebar fixed top-0 left-0 h-screen bg-syyclopsBlue text-white overflow-y-auto transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0 sm:relative`}
             >
-                <div className="flex justify-center sticky top-0 bg-syyclopsBlue py-4 mt-0 z-50">
-                    <img src={logo} alt="logo" className="my-auto w-1/2" />
+                <div className="flex justify-center sticky top-0 bg-syyclopsBlue py-6 z-50">
+                    <img src={logo} alt="logo" className="my-auto w-3/5 md:w-4/5 lg:w-3/5" />
                 </div>
                 <div className="px-4">
                     <div className=" justify-between">
@@ -94,14 +94,14 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
                             users.map((user) => (
                                 <div
                                     key={user.id}
-                                    className="userDiv border-syyclopsOrange rounded-xl border p-4 text-2xl my-4 hover:bg-syyclopsLightBlue transition duration-300 whitespace-nowrap overflow-hidden"
+                                    className="userDiv border-syyclopsOrange rounded-xl border p-4 text-base md:text-lg lg:text-xl my-4 hover:bg-syyclopsLightBlue transition duration-300 whitespace-nowrap overflow-hidden"
                                     onClick={() => { changeSelectedUser(user) }}
                                 >
                                     <div className="mainInfo sm:flex lg:flex  md:inline-block w-full font-semibold">
-                                        <div className="text-lg md:text-xl lg:text-2xl font-bold">{user.id}</div>
+                                        <div className=" font-bold">{user.id}</div>
                                         <div className="flex mx-auto">
-                                            <p className="mr-1 lg:mr-4 text-lg md:text-xl lg:text-2xl">{user.firstName}</p>
-                                            <p className="text-lg md:text-xl lg:text-2xl">{user.lastName}</p>
+                                            <p className="mr-1 lg:mr-4 ">{user.firstName}</p>
+                                            <p className="">{user.lastName}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -35,13 +35,11 @@ html, body, #root {
   padding: 16px;
   box-shadow: 0 0 20px rgba(234, 96, 32, 0.5)
 }
- 
+
 /* editing icon smooth change */
 .icon-transition {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
-
-
 /* user sortBy dropdown */
 .dropdown-menu {
   border-radius: 5px;
