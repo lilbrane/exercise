@@ -1,13 +1,13 @@
 # Starting the app 
 
 ## Windows
-- Double click start-app.bat file
+- Run start-app.bat file
 
 ## Other OS
 Go to `backend` folder and run:
 - if virutal enviroment doesn't exist, create one: `python -m venv venv`
 - Activate virtual enviroment: `.\venv\Scripts\activate`
-- Install packages: `pip install "fastapi[standard]" pytest`
+- Install packages: `pip install "fastapi[standard]"`
 - Run server: `fastapi dev main.py`
 
 Go to `frontend` folder and run: 
