@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import logo from '../syyclopsLogo.png';
-import Dropdown from 'react-dropdown';
+// import Dropdown from 'react-dropdown';
+import Dropdown from './Dropdown.js';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const Sidebar = ({ setSelected, updatedUser  }) => {
@@ -77,13 +78,22 @@ const Sidebar = ({ setSelected, updatedUser  }) => {
                     <img src={logo} alt="logo" className="my-auto w-3/5 md:w-4/5 lg:w-3/5" />
                 </div>
                 <div className="px-4">
-                    <div className=" justify-between">
+                    <div className=" justify-between flex md:inline-block lg:flex">
 
                         <p className="text-syyclopsOrange font-semibold text-lg md:text-2xl lg:text-3xl">Users</p>
 
-                        <div className="flex md:space-x-0 lg:space-x-2 space-x-2 my-auto mt-2 z-30">
-                            <p className="text-sm md:text-base">Sort by: </p>
-                            <Dropdown className="border border-syyclopsOrange px-2 rounded-lg z-40" options={sortOptions} onChange={changeOrder} value={selectedOrder} menuClassName="dropdown-menu "/>
+                        <div className="flex  space-x-2 my-auto md:mt-2 z-30">
+                            <p className="text-sm md:text-base my-auto">Sort: </p>
+                            {/* <Dropdown className="border border-syyclopsOrange px-2 rounded-lg z-40" options={sortOptions} onChange={changeOrder} value={selectedOrder} menuClassName="dropdown-menu "/> */}
+                            <Dropdown 
+                                options={[
+                                    { value: 'id', label: 'Id' },
+                                    { value: 'fName', label: 'First Name' },
+                                    { value: 'lName', label: 'Last Name' }
+                                ]}
+                                onChange={changeOrder}
+                                label="Sort by"
+                            />
                         </div>
 
                     </div>

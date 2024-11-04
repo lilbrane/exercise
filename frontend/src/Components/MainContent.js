@@ -53,7 +53,7 @@ const MainContent = ({user, updateUser }) => {
   return (
     
     <div className='w-full md:w-3/4 min-h-screen p-4 border-r text-syyclopsBlue overflow-y-auto my-auto flex '>
-        <div className='mx-auto border-syyclopsOrange w-3/4 p-4 md:p-6 lg:p-10 rounded-3xl border-8'>
+        <div className='mx-auto border-syyclopsOrange w-full md:w-3/4 p-4 md:p-6 lg:p-10 rounded-3xl border-8 center'>
             {
                 currentUser != null ?
                     <>
