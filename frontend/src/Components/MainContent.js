@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FaRegEdit,FaEdit } from "react-icons/fa";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MainContent = ({user, updateUser }) => {
     const [editing, setEditing] = useState(false);
     const [currentUser, setCurrentUser] = useState(user);
+    const [originalUser, setOriginalUser] = useState(user);
     const [editHover, setEditHover] = useState(false)
 
     const [emailErr, setEmailErr] = useState("")
@@ -15,9 +18,11 @@ const MainContent = ({user, updateUser }) => {
     // used for updatiung mainContent user info and setting editing to false when changing user in sidebar
     useEffect(() => {
         setCurrentUser(user);
+        setOriginalUser(user);
         setEditing(false);
         setEmailErr("")
 
+        resetErrors();
     }, [user]);
 
     
@@ -36,9 +41,17 @@ const MainContent = ({user, updateUser }) => {
             // sending updated user to sidebar
             updateUser(response.data);
 
+            toast.success("User updated successfully", {
+                autoClose: 2000, 
+
+            });
+
         } catch (err) {
             console.error(`ERROR in updating user - ${err.message}`)
-            alert("Failed to update user. Please try again.");
+            
+            toast.error("Error updating user!", {
+                autoClose: 2000,
+            });
         }
     }
 
@@ -47,8 +60,29 @@ const MainContent = ({user, updateUser }) => {
 
     const checkEmail = () => { setEmailErr( !isValidEmail(currentUser.email) ? "Please enter a valid email address." : "")};
     const checkAge = () => { setAgeErr( currentUser.age === "" ? "Please provide your age." : "")};
-    const checkName = () => { setNameErr( currentUser.firstName === "" || currentUser.lastName === ""  ? "Please enter your first and last name." : "")};
+    const checkName = () => { 
+        let errMsg = ""
+        if(currentUser.firstName === "" || currentUser.lastName === "") 
+            errMsg = "Please enter your first and last name."
+        else if(currentUser.firstName.length > 20 || currentUser.lastName.length > 20)
+            errMsg = "Name and last name can't be over 20 letters."
+
+        setNameErr(errMsg)
+    };
     const checkPhone = () => { setPhoneErr( currentUser.phone === "" ? "Please provide your phone number." : "")};
+
+    const resetErrors = () => {
+        setEmailErr("")
+        setNameErr("")
+        setPhoneErr("")
+        setAgeErr("")
+    }
+
+    const cancelEditing = () => {
+        setCurrentUser(originalUser)
+        setEditing(false)
+        resetErrors()
+    }
 
   return (
     
@@ -65,18 +99,21 @@ const MainContent = ({user, updateUser }) => {
                             <p>User {currentUser.id}. info</p>
                           
                           {/* editing logo button, when hovered icon change to filled version */}
-                            <div className='ml-auto mr-10 relative'
-                                onClick={() => setEditing(!editing)}
-                                onMouseEnter={() => setEditHover(true)} 
-                                onMouseLeave={() => setEditHover(false)}>
+                          { !editing &&
+
+                              <div className='ml-auto mr-10 relative'
+                              onClick={() => setEditing(!editing)}
+                              onMouseEnter={() => setEditHover(true)} 
+                              onMouseLeave={() => setEditHover(false)}>
                                 <FaRegEdit 
                                         className={`text-syyclopsLightBlue icon-transition absolute transition-opacity duration-300 ${editHover ? 'opacity-0 scale-100' : 'opacity-100 scale-100'} w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16`} 
-
-                                />
+                                        
+                                        />
                                 <FaEdit 
                                         className={`text-syyclopsLightBlue icon-transition absolute transition-opacity duration-300 ${editHover ? 'opacity-100 scale-100' : 'opacity-0 scale-100'} w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16`} 
-                                />
+                                        />
                             </div>
+                        }
 
                         </div>
 
@@ -87,8 +124,22 @@ const MainContent = ({user, updateUser }) => {
                             {editing ? (
                                 <div className='col-span-3 lg:col-span-2'>
                                     <div className='md:flex '>
-                                        <input className='border rounded border-syyclopsLightBlue border-opacity-30 p-2 w-full'  value={currentUser.firstName} onChange={(e) => setCurrentUser({ ...currentUser, firstName: e.target.value })} onBlur={checkName}/>
-                                        <input className='border rounded border-syyclopsLightBlue border-opacity-30 p-2 w-full'  value={currentUser.lastName} onChange={(e) => setCurrentUser({ ...currentUser, lastName: e.target.value })} onBlur={checkName}/>
+                                        <input className='border rounded border-syyclopsLightBlue border-opacity-30 p-2 w-full'  value={currentUser.firstName} onChange={(e) => {
+                                            const value = e.target.value;
+                                            // only letters
+                                            if (/^[A-Za-z]*$/.test(value) || value === "")
+                                                setCurrentUser({ ...currentUser, firstName: value });
+                                            }
+                                        }
+                                        onBlur={checkName}/>
+                                        <input className='border rounded border-syyclopsLightBlue border-opacity-30 p-2 w-full'  value={currentUser.lastName} onChange={(e) => {
+                                            const value = e.target.value;
+                                            // only letters
+                                            if (/^[A-Za-z]*$/.test(value) || value === "")
+                                                setCurrentUser({ ...currentUser, lastName: value });
+                                            }}
+                                         onBlur={checkName}
+                                         />
                                     </div>
                                     {nameErr !== "" && <p className="text-red-500 text-lg">{nameErr}</p>}
 
@@ -194,9 +245,12 @@ const MainContent = ({user, updateUser }) => {
                         </div>
 
                         {editing && 
-                        <div className="flex place-content-center mt-8">
+                        <div className="flex place-content-center mt-8 space-x-4">
                             <button className='bg-green p-3 text-white text-xl rounded-lg hover:scale-105 hover:transition-all' onClick={() => saveChanges()}>Save changes</button>
+                            <button className='bg-red-500 p-3 text-white text-xl rounded-lg hover:scale-105 hover:transition-all' onClick={() => cancelEditing()}>Cancel</button>
                         </div>
+
+                        
                         }
                     </>
                 :
@@ -207,9 +261,12 @@ const MainContent = ({user, updateUser }) => {
                         <p className='text-2xl'>select a user from the list</p>
                     </div>
                 </div>
+                
             }
+            
+        <ToastContainer hideProgressBar={true} />
+            
         </div>
-
     </div>
   )
 }
